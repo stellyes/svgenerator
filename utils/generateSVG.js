@@ -1,3 +1,5 @@
+// Formats hexadecmial input from user if value
+// is improperly formatted
 function formatHexadecimal(color) {
   // Convert color string to lowercase for simple comparison
   color = color.toLowerCase();

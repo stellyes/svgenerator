@@ -61,12 +61,13 @@ function isColor(name) {
   return false;
 }
 
-function createSVG(logo, text) {
-  fs.writeFile(`logo_${text}.svg`, logo, (err) => {
+// Writes SVG data to file
+function createSVG(logo) {
+  fs.writeFile(`logo.svg`, logo, (err) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(`>> SVG saved succesfully as logo_${text}.svg`);
+      console.log(`>> Generated logo.svg`);
     }
   });
 }
@@ -74,7 +75,7 @@ function createSVG(logo, text) {
 function init() {
   inquirer.prompt(questions).then(function (answers) {
     let logo = svg(answers);
-    createSVG(logo, answers.text);
+    createSVG(logo);
   });
 }
 
