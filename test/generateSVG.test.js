@@ -270,3 +270,48 @@ describe("Triangle", () => {
     );
   });
 });
+
+describe("formatHexadecimal", () => {
+  // Predefined string lengths 3, 6, and 8 are tested
+  // because input lengths are validated by inquirer
+  // inline with the question
+  it("Should format a 3-character length string with hex value to include a '#' in front of it", () => {
+    let color = generateSVG.formatHexadecimal("000");
+    expect(color).toEqual("#000");
+  });
+
+  it("Should format a 6-character length string with hex value to include a '#' in front of it", () => {
+    let color = generateSVG.formatHexadecimal("000000");
+    expect(color).toEqual("#000000");
+  });
+
+  it("Should format a 8-character length string with hex value to include a '#' in front of it", () => {
+    let color = generateSVG.formatHexadecimal("00000000");
+    expect(color).toEqual("#00000000");
+  });
+
+  it("Should identify a pre-formatted hex value and return equivalent value", () => {
+    let color = generateSVG.formatHexadecimal("#00000000");
+    expect(color).toEqual("#00000000");
+  });
+
+  it("Should identify an HTML-safe color keyword of 3-character length, and return the original value in lowercase", () => {
+    let color = generateSVG.formatHexadecimal("Red");
+    expect(color).toEqual("red");
+  });
+
+  it("Should identify an HTML-safe color keyword of 6-character length, and return the original value in lowercase", () => {
+    let color = generateSVG.formatHexadecimal("Violet");
+    expect(color).toEqual("violet");
+  });
+
+  it("Should identify an HTML-safe color keyword of 8-character length, and return the original value in lowercase", () => {
+    let color = generateSVG.formatHexadecimal("Lavender");
+    expect(color).toEqual("lavender");
+  });
+
+  it("Should identify an HTML-safe color keyword of arbitrary length, and return the original value in lowercase", () => {
+    let color = generateSVG.formatHexadecimal("Black");
+    expect(color).toEqual("black");
+  });
+});

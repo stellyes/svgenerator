@@ -74,9 +74,8 @@ function createSVG(logo) {
 
 function init() {
   inquirer.prompt(questions).then(function (answers) {
-    console.log(answers);
-    //let logo = svg(answers);
-    //createSVG(logo);
+    let logo = svg(answers);
+    createSVG(logo);
   });
 }
 
