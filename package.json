@@ -1,0 +1,22 @@
+{
+  "name": "svgenerator",
+  "version": "1.0.0",
+  "description": "A Node.js application that generates an SVG logo based on user parameters",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/stellyes/svgenerator.git"
+  },
+  "author": "Ryan England",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stellyes/svgenerator/issues"
+  },
+  "homepage": "https://github.com/stellyes/svgenerator#readme",
+  "dependencies": {
+    "inquirer": "^9.2.11"
+  }
+}
