@@ -65,7 +65,7 @@ function isColor(name) {
 function createSVG(logo) {
   fs.writeFile(`logo.svg`, logo, (err) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
       console.log(`>> Generated logo.svg`);
     }
@@ -74,7 +74,7 @@ function createSVG(logo) {
 
 function init() {
   inquirer.prompt(questions).then(function (answers) {
-    let logo = svg(answers);
+    let logo = svg.generateSVG(answers);
     createSVG(logo);
   });
 }

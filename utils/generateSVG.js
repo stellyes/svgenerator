@@ -143,13 +143,13 @@ module.exports.formatHexadecimal = function formatHexadecimal(color) {
 module.exports.generateSVG = function generateSVG(data) {
   // Convert text and shape color to proper hex value by
   // adding # at beginning of color string
-  data.colorShape = formatHexadecimal(data.colorShape);
-  data.colorText = formatHexadecimal(data.colorText);
+  data.colorShape = module.exports.formatHexadecimal(data.colorShape);
+  data.colorText = module.exports.formatHexadecimal(data.colorText);
 
   switch (data.shape) {
     case "Circle":
       let svgCircle = "";
-      let circle = new Circle();
+      let circle = new module.exports.Circle();
       circle.setColor(data.colorShape);
       circle.setText(data.text);
       circle.setTextColor(data.colorText);
@@ -161,7 +161,7 @@ module.exports.generateSVG = function generateSVG(data) {
 
     case "Square":
       let svgSquare = "";
-      let square = new Circle();
+      let square = new module.exports.Square();
       square.setColor(data.colorShape);
       square.setText(data.text);
       square.setTextColor(data.colorText);
@@ -173,7 +173,7 @@ module.exports.generateSVG = function generateSVG(data) {
 
     case "Triangle":
       let svgTriangle = "";
-      let triangle = new Triangle();
+      let triangle = new module.exports.Triangle();
       triangle.setColor(data.colorShape);
       triangle.setText(data.text);
       triangle.setTextColor(data.colorText);
