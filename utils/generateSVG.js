@@ -8,20 +8,6 @@ class Shape {
   renderClosingTag() {
     return `</svg>`;
   }
-}
-
-class Circle extends Shape {
-  setColor(color) {
-    this.color = color;
-  }
-
-  renderShape() {
-    try {
-      return `<circle cx="150" cy="100" r="100" fill="${this.color}" />`;
-    } catch {
-      console.error(">> ERROR: Color attribute has not been set");
-    }
-  }
 
   setText(text) {
     this.text = text;
@@ -31,28 +17,31 @@ class Circle extends Shape {
     this.textColor = textColor;
   }
 
-  renderText() {
-    try {
-      return `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
-    } catch {
-      if (!this.text) {
-        console.error(">> ERROR: Text attribute has not been set");
-      } else if (!this.textColor) {
-        console.error(">> ERROR: Text color attribute has not been set");
-      } else {
-        console.error(
-          ">> ERROR: Unknown error occured trying to render text for Circle"
-        );
-      }
-    }
-  }
-}
-
-class Square extends Shape {
   setColor(color) {
     this.color = color;
   }
+}
 
+module.exports.Circle = class Circle extends Shape {
+  renderShape() {
+    if (!this.color) {
+      throw new Error(">> ERROR: Color attribute has not been set");
+    } else {
+      return `<circle cx="150" cy="100" r="100" fill="${this.color}" />`;
+    }
+  }
+
+  renderText() {
+    if (!this.text) {
+      throw new Error(">> ERROR: Text attribute has not been set");
+    } else if (!this.textColor) {
+      throw new Error(">> ERROR: Text color attribute has not been set");
+    }
+    return `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
+  }
+};
+
+module.exports.Square = class Square extends Shape {
   renderShape() {
     try {
       return `<rect width="200" height="200" x="50" fill="${this.color}" />`;
@@ -61,72 +50,46 @@ class Square extends Shape {
     }
   }
 
-  setText(text) {
-    this.text = text;
-  }
-
-  setTextColor(textColor) {
-    this.textColor = textColor;
-  }
-
   renderText() {
-    try {
-      return `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
-    } catch {
-      if (!this.text) {
-        console.error(">> ERROR: Text attribute has not been set");
-      } else if (!this.textColor) {
-        console.error(">> ERROR: Text color attribute has not been set");
-      } else {
-        console.error(
-          ">> ERROR: Unknown error occured trying to render text for Square"
-        );
-      }
+    if (!this.text) {
+      console.error(">> ERROR: Text attribute has not been set");
+    } else if (!this.textColor) {
+      console.error(">> ERROR: Text color attribute has not been set");
+    } else {
+      console.error(
+        ">> ERROR: Unknown error occured trying to render text for Square"
+      );
     }
+    return `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
   }
-}
+};
 
-class Triangle extends Shape {
-  setColor(color) {
-    this.color = color;
-  }
-
+module.exports.Triangle = class Triangle extends Shape {
   renderShape() {
-    try {
-      return `<polygon points="50,200 150,0 250,200" style="fill:${this.color}" />`;
-    } catch {
+    if (!this.color) {
       console.error(">> ERROR: Color attribute has not been set");
     }
-  }
-
-  setText(text) {
-    this.text = text;
-  }
-
-  setTextColor(textColor) {
-    this.textColor = textColor;
+    return `<polygon points="50,200 150,0 250,200" style="fill:${this.color}" />`;
   }
 
   renderText() {
-    try {
+    if (!this.text) {
+      console.error(">> ERROR: Text attribute has not been set");
+    } else if (!this.textColor) {
+      console.error(">> ERROR: Text color attribute has not been set");
+    } else {
+      console.error(
+        ">> ERROR: Unknown error occured trying to render text for Triangle"
+      );
+
       return `<text x="150" y="150" font-size="40" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
-    } catch {
-      if (!this.text) {
-        console.error(">> ERROR: Text attribute has not been set");
-      } else if (!this.textColor) {
-        console.error(">> ERROR: Text color attribute has not been set");
-      } else {
-        console.error(
-          ">> ERROR: Unknown error occured trying to render text for Triangle"
-        );
-      }
     }
   }
-}
+};
 
 // Formats hexadecmial input from user if value
 // is improperly formatted
-function formatHexadecimal(color) {
+module.exports.formatHexadecimal = function formatHexadecimal(color) {
   // Convert color string to lowercase for simple comparison
   color = color.toLowerCase();
 
@@ -186,9 +149,9 @@ function formatHexadecimal(color) {
   } else {
     return color;
   }
-}
+};
 
-function generateSVG(data) {
+module.exports.generateSVG = function generateSVG(data) {
   // Convert text and shape color to proper hex value by
   // adding # at beginning of color string
   data.colorShape = formatHexadecimal(data.colorShape);
@@ -234,6 +197,4 @@ function generateSVG(data) {
       console.error(">> ERROR PARSING data.shape");
       return "";
   }
-}
-
-module.exports = generateSVG;
+};
