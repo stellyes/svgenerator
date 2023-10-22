@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+const svg = require("./utils/generateSVG");
 const fs = require("fs");
 
 // Get HTML colors from colors.json file
@@ -15,7 +16,7 @@ const questions = [
   {
     message:
       "Please choose a color for your logo text (HTML5 color keyword or hexadecimal value): ",
-    name: "color-text",
+    name: "colorText",
     validate: function (input) {
       // Checks if input is HTML Color, 3 digit hex value, or 6 digit hex value
       return isColor(input) || input.length === 3 || input.length === 6;
@@ -30,7 +31,7 @@ const questions = [
   {
     message:
       "Please choose a color for your shape (HTML5 color keyword or hexadecimal value): ",
-    name: "color-shape",
+    name: "colorShape",
     validate: function (input) {
       // Checks if input is HTML Color, 3 digit hex value, or 6 digit hex value
       return isColor(input) || input.length === 3 || input.length === 6;
@@ -40,17 +41,27 @@ const questions = [
 
 // Checks if input color name is in HTML color array
 function isColor(name) {
-  for (const color of colors) {
-    if (colortoLowerCase() === name.toLowerCase()) {
+  for (const color in colors) {
+    if (color.toLowerCase() === name.toLowerCase()) {
       return true;
     }
   }
   return false;
 }
 
+function createSVG(logo, text) {
+  fs.writeFile(`logo_${text}.svg`, logo, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+    }
+  });
+}
+
 function init() {
   inquirer.prompt(questions).then(function (answers) {
-    console.log(answers);
+    let logo = svg(answers);
+    createSVG(logo, answers.text);
   });
 }
 
