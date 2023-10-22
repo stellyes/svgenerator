@@ -19,7 +19,13 @@ const questions = [
     name: "colorText",
     validate: function (input) {
       // Checks if input is HTML Color, 3 digit hex value, or 6 digit hex value
-      return isColor(input) || input.length === 3 || input.length === 6;
+      // The check for length of 8 is there in case transparency value is provided
+      return (
+        isColor(input) ||
+        input.length === 3 ||
+        input.length === 6 ||
+        input.length === 8
+      );
     },
   },
   {
@@ -34,7 +40,13 @@ const questions = [
     name: "colorShape",
     validate: function (input) {
       // Checks if input is HTML Color, 3 digit hex value, or 6 digit hex value
-      return isColor(input) || input.length === 3 || input.length === 6;
+      // The check for length of 8 is there in case transparency value is provided
+      return (
+        isColor(input) ||
+        input.length === 3 ||
+        input.length === 6 ||
+        input.length === 8
+      );
     },
   },
 ];
@@ -54,6 +66,7 @@ function createSVG(logo, text) {
     if (err) {
       console.log(err);
     } else {
+      console.log(`>> SVG saved succesfully as logo_${text}.svg`);
     }
   });
 }
