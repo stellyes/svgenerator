@@ -1,3 +1,129 @@
+class Shape {
+  renderHeader() {
+    return `<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">`;
+  }
+
+  renderClosingTag() {
+    return `</svg>`;
+  }
+}
+
+class Circle extends Shape {
+  setColor(color) {
+    this.color = color;
+  }
+
+  renderShape() {
+    try {
+      return `<circle cx="150" cy="100" r="100" fill="${this.color}" />`;
+    } catch {
+      console.error(">> ERROR: Color attribute has not been set");
+    }
+  }
+
+  setText(text) {
+    this.text = text;
+  }
+
+  setTextColor(textColor) {
+    this.textColor = textColor;
+  }
+
+  renderText() {
+    try {
+      return `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
+    } catch {
+      if (!this.text) {
+        console.error(">> ERROR: Text attribute has not been set");
+      } else if (!this.textColor) {
+        console.error(">> ERROR: Text color attribute has not been set");
+      } else {
+        console.error(
+          ">> ERROR: Unknown error occured trying to render text for Circle"
+        );
+      }
+    }
+  }
+}
+
+class Square extends Shape {
+  setColor(color) {
+    this.color = color;
+  }
+
+  renderShape() {
+    try {
+      return `<rect width="200" height="200" x="50" fill="${this.color}" />`;
+    } catch {
+      console.error(">> ERROR: Color attribute has not been set");
+    }
+  }
+
+  setText(text) {
+    this.text = text;
+  }
+
+  setTextColor(textColor) {
+    this.textColor = textColor;
+  }
+
+  renderText() {
+    try {
+      return `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
+    } catch {
+      if (!this.text) {
+        console.error(">> ERROR: Text attribute has not been set");
+      } else if (!this.textColor) {
+        console.error(">> ERROR: Text color attribute has not been set");
+      } else {
+        console.error(
+          ">> ERROR: Unknown error occured trying to render text for Square"
+        );
+      }
+    }
+  }
+}
+
+class Triangle extends Shape {
+  setColor(color) {
+    this.color = color;
+  }
+
+  renderShape() {
+    try {
+      return `<polygon points="50,200 150,0 250,200" style="fill:${this.color}" />`;
+    } catch {
+      console.error(">> ERROR: Color attribute has not been set");
+    }
+  }
+
+  setText(text) {
+    this.text = text;
+  }
+
+  setTextColor(textColor) {
+    this.textColor = textColor;
+  }
+
+  renderText() {
+    try {
+      return `<text x="150" y="150" font-size="40" text-anchor="middle" fill="${this.textColor}">${this.text}</text>`;
+    } catch {
+      if (!this.text) {
+        console.error(">> ERROR: Text attribute has not been set");
+      } else if (!this.textColor) {
+        console.error(">> ERROR: Text color attribute has not been set");
+      } else {
+        console.error(
+          ">> ERROR: Unknown error occured trying to render text for Triangle"
+        );
+      }
+    }
+  }
+}
+
 // Formats hexadecmial input from user if value
 // is improperly formatted
 function formatHexadecimal(color) {
@@ -70,43 +196,40 @@ function generateSVG(data) {
 
   switch (data.shape) {
     case "Circle":
-      return `<?xml version="1.0" encoding="utf-8"?>
-
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-            
-    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-    <circle cx="150" cy="100" r="100" fill="${data.colorShape}" />
-
-    <text x="150" y="125" font-size="60" text-anchor="middle" fill="${data.colorText}">${data.text}</text>
-
-</svg>`;
+      let svgCircle = "";
+      let circle = new Circle();
+      circle.setColor(data.colorShape);
+      circle.setText(data.text);
+      circle.setTextColor(data.colorText);
+      svgCircle += circle.renderHeader();
+      svgCircle += circle.renderShape();
+      svgCircle += circle.renderText();
+      svgCircle += circle.renderClosingTag();
+      return svgCircle;
 
     case "Square":
-      return `<?xml version="1.0" encoding="utf-8"?>
-
-      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">  
-      
-      <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-    <rect width="200" height="200" x="50" fill="${data.colorShape}" />
-      
-    <text x="150" y="125" font-size="60" text-anchor="middle" fill="${data.colorText}">${data.text}</text>
-      
-</svg>`;
+      let svgSquare = "";
+      let square = new Circle();
+      square.setColor(data.colorShape);
+      square.setText(data.text);
+      square.setTextColor(data.colorText);
+      svgSquare += square.renderHeader();
+      svgSquare += square.renderShape();
+      svgSquare += square.renderText();
+      svgSquare += square.renderClosingTag();
+      return svgSquare;
 
     case "Triangle":
-      return `<?xml version="1.0" encoding="utf-8"?>
-
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">  
-      
-    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-    <polygon points="50,200 150,0 250,200" style="fill:${data.colorShape}" />        
-    
-    <text x="150" y="150" font-size="40" text-anchor="middle" fill="${data.colorText}">${data.text}</text>
-        
-</svg>`;
+      let svgTriangle = "";
+      let triangle = new Triangle();
+      triangle.setColor(data.colorShape);
+      triangle.setText(data.text);
+      triangle.setTextColor(data.colorText);
+      svgTriangle += triangle.renderHeader();
+      svgTriangle += triangle.renderShape();
+      svgTriangle += triangle.renderText();
+      svgTriangle += triangle.renderClosingTag();
+      return svgTriangle;
     default:
       console.error(">> ERROR PARSING data.shape");
       return "";
